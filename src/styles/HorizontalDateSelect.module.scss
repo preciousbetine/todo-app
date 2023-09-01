@@ -1,0 +1,41 @@
+.dateSelect {
+  h2 {
+    padding: 0 15px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 12.74px;
+  }
+
+  .days {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .day {
+    margin-left: 12.74px;
+    height: 54.3px;
+    flex: 1 0 49.37px;
+    display: flex;
+    flex-direction: column;
+    gap: 6.37px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-gray-300);
+    border-radius: 6px;
+    background-color: white;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    font-size: 11.15px;
+
+    & + :last-child {
+      margin-right: 12.74px;
+    }
+  }
+}
