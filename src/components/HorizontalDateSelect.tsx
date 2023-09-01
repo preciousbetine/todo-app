@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ComponentStyles from '../styles/HorizontalDateSelect.module.scss';
 
 function HorizontalDateSelect() {
@@ -18,11 +18,24 @@ function HorizontalDateSelect() {
   }
 
   const daysJSX = daysArray.map((day) => (
-    <button type="button" key={day.day} className={ComponentStyles.day}>
+    <button
+      type="button"
+      key={day.day}
+      className={ComponentStyles.day + (day.day === (new Date).getDate() ? ' ' + ComponentStyles.today : '') }
+    >
       <span>{day.dayOfWeek}</span>
       <span>{day.day}</span>
     </button>
   ));
+
+  useEffect(() => {
+    const currentDayButton = document.querySelector(`.${ComponentStyles.today}`);
+    currentDayButton?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'center'
+    });
+  }, [daysJSX]);
 
   return (
     <div className={ComponentStyles.dateSelect}>

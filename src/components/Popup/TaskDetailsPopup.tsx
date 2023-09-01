@@ -1,20 +1,43 @@
 import { useState } from 'react';
 import EditTaskPopup from './EditTaskPopup';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { removeTodo } from '../../redux/slices/todo';
 import TaskPopupWrapper, { TaskPopupProps } from './TaskPopupWrapper';
 import TaskStyles from '../../styles/TaskPopup.module.scss';
 
 export default function TaskDetailsPopup({
+  id,
   visible,
   setVisible,
   title,
   date,
   startTime,
   endTime,
+  completed,
 }: TaskPopupProps) {
   const [editing, setEditing] = useState<boolean>(false);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const deleteTodo = () => {
+    setVisible(false);
+    dispatch(removeTodo(id));
+  };
+
   return (
-    <TaskPopupWrapper visible={visible} setVisible={setVisible} fullScreen>
-      <EditTaskPopup visible={editing} setVisible={setEditing} title={title} fullScreen />
+    <TaskPopupWrapper id={id} visible={visible} setVisible={setVisible} fullScreen>
+      <EditTaskPopup
+        id={id}
+        visible={editing}
+        setVisible={setEditing}
+        title={title}
+        date={date}
+        startTime={startTime}
+        endTime={endTime}
+        completed={completed}
+        fullScreen
+      />
       <div className={TaskStyles['task-popup_content']}>
         <div className={TaskStyles['task-popup_header']}>
           <span />
@@ -47,7 +70,7 @@ export default function TaskDetailsPopup({
       <div className={TaskStyles['task-popup_actions']}>
         <button
           className={TaskStyles['task-popup_delete']}
-          onClick={() => setVisible(false)}
+          onClick={() => deleteTodo()}
         >
           Delete
         </button>

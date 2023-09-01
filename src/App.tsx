@@ -1,25 +1,20 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from './redux/store';
 import Header from './components/Header';
 import HorizontalDateSelect from './components/HorizontalDateSelect';
 import Task from './components/Task';
 import AddTaskPopup from './components/Popup/AddTaskPopup';
+import { TodoState, getTodos } from './redux/slices/todo';
 import TodoAppStyles from './styles/TodoApp.module.scss';
 
 function TodoApp() {
   const [period, setPeriod] = useState<string>('morning');
+  const dispatch = useDispatch<AppDispatch>();
   const [taskPopupVisible, setTaskPopupVisible] = useState<boolean>(false);
+  const todos = useSelector((s:  { todos: TodoState }) => s.todos).todos;
 
-  const tasks = [
-    {
-      id: 1,
-      title: 'Task 1',
-      date: '2021-09-01',
-      startTime: '09:00',
-      endTime: '10:00',
-    },
-  ]
-
-  const taskComponents = tasks.map(task => {
+  const taskComponents = todos.map(task => {
     return (
       <Task
         key={task.id}
@@ -37,7 +32,9 @@ function TodoApp() {
     } else if (hour >= 18) {
       setPeriod('evening');
     }
-  }, []);
+
+    dispatch(getTodos());
+  }, [dispatch]);
 
   return (
     <>
@@ -62,7 +59,7 @@ function TodoApp() {
         <span>Input Task</span>
         <img className={TodoAppStyles.svg} src="microphone.svg" alt="" />
       </button>
-      <AddTaskPopup visible={taskPopupVisible} setVisible={() => setTaskPopupVisible(false)} />
+      <AddTaskPopup id="new-task" visible={taskPopupVisible} setVisible={() => setTaskPopupVisible(false)} />
     </>
   )
 }

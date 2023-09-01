@@ -1,9 +1,42 @@
-import TaskStyles from '../../styles/TaskPopup.module.scss';
+import { useState } from 'react';
+import { v5 as uuidv5 } from 'uuid';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../redux/store';
+import { addTodo } from '../../redux/slices/todo';
 import TaskPopupWrapper, { TaskPopupProps } from './TaskPopupWrapper';
+import TaskStyles from '../../styles/TaskPopup.module.scss';
 
-export default function AddTaskPopup({ visible, setVisible }: TaskPopupProps) {
+export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps) {
+  const [title, setTitle] = useState<string>('');
+  const [startTime, setStartTime] = useState<string>('02:00');
+  const [endTime, setEndTime] = useState<string>('04:00');
+  const [date, setDate] = useState<string>('Today');
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  const saveTodo = () => {
+    const id = uuidv5((Math.random() * 200).toString(), uuidv5.URL);
+
+    const todo = {
+      id,
+      title,
+      startTime,
+      endTime,
+      date,
+      completed: false,
+    };
+
+    dispatch(addTodo(todo));
+
+    setTitle('');
+    setStartTime(startTime);
+    setEndTime(endTime);
+    setDate(date);
+    setVisible(false);
+  };
+
   return (
-    <TaskPopupWrapper visible={visible} setVisible={setVisible}>
+    <TaskPopupWrapper id={id} visible={visible} setVisible={setVisible}>
       <div className={TaskStyles['task-popup_content']}>
         <div className={TaskStyles['task-popup_header']}>
           <h3>Add Task</h3>
@@ -13,7 +46,11 @@ export default function AddTaskPopup({ visible, setVisible }: TaskPopupProps) {
             <img alt="close" src="close.svg" />
           </button>
         </div>
-        <textarea className={TaskStyles['task-popup_description']} />
+        <textarea
+          className={TaskStyles['task-popup_description']}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
         <div className={TaskStyles['task-time_settings']}>
           <button className={TaskStyles['task-time_settings_day']}>
             <img
@@ -58,7 +95,12 @@ export default function AddTaskPopup({ visible, setVisible }: TaskPopupProps) {
         >
           Cancel
         </button>
-        <button className={TaskStyles['task-popup_add']}>Add</button>
+        <button
+          className={TaskStyles['task-popup_add']}
+          onClick={saveTodo}
+        >
+          Add
+        </button>
       </div>
     </TaskPopupWrapper>
   )

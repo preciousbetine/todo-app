@@ -1,20 +1,27 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
 import TaskDetailsPopup from './Popup/TaskDetailsPopup';
 import TaskStyles from '../styles/Task.module.scss';
+import { updateTodoCompletedStatus } from '../redux/slices/todo';
 
 interface TaskProps {
-  id: number;
+  id: string;
   title: string;
   date: string;
   startTime: string;
   endTime: string;
+  completed: boolean,
 }
 
-function Task({ id, title, date, startTime, endTime }: TaskProps) {
-  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+function Task({ id, title, date, startTime, endTime, completed }: TaskProps) {
+  const [isCompleted, setIsCompleted] = useState<boolean>(completed);
   const [taskDetailsVisible, setTaskDetailsVisible] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+
   const toggleTaskCompleted = () => {
     setIsCompleted(!isCompleted);
+    dispatch(updateTodoCompletedStatus({ id, completed: !isCompleted }));
   };
 
   return (
