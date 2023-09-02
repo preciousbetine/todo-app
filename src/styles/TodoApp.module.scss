@@ -1,13 +1,46 @@
+$breakpoint: 1000px;
+$max-width: 1340px;
+
 .application {
   padding: 32px 0 48px;
+  display: flex;
 
-  & > * {
-    margin-bottom: 32px;
+  .main {
+    width: 100%;
+
+    & > * {
+      margin-bottom: 32px;
+    }
+  }
+
+  .side-panel {
+    display: none;
+  }
+
+  @media (min-width: $breakpoint) {
+    padding: 48px 32px 96px 32px;
+    gap: 24px;
+    max-width: $max-width;
+    margin: auto;
+
+    .main {
+      width: calc(100% - 442px);
+      flex: 1 1 auto;
+    }
+
+    .side-panel {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1 0 418px;
+    }
   }
 }
 
 .welcome {
-  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 16px 0;
 
   h1 {
     font-size: 24px;
@@ -21,6 +54,33 @@
     font-size: 16px;
     line-height: 24px;
   }
+
+  button {
+    display: none;
+  }
+
+  @media (min-width: $breakpoint) {
+    max-width: $max-width;
+    margin: auto;
+    padding: 48px 32px 0;
+
+    button {
+      display: flex;
+      border: none;
+      background-color: var(--color-blue);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+      padding: 10px 16px;
+
+      font-family: Work Sans, sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 20px;
+      cursor: pointer;
+    }
+  }
 }
 
 .tasks-container {
@@ -31,6 +91,10 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
+  }
+
+  @media (min-width: $breakpoint) {
+    padding: 0;
   }
 }
 
@@ -55,5 +119,9 @@
 
   .svg {
     padding: 5px;
+  }
+
+  @media (min-width: $breakpoint) {
+    display: none;
   }
 }

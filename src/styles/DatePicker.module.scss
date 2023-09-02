@@ -1,0 +1,118 @@
+.date-picker {
+  width: 394px;
+  height: 444px;
+  padding: 20px 24px;
+  box-shadow: 0px 8px 8px -4px rgba(16, 24, 40, 0.03), 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.date-picker__header {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    color: var(--color-gray-700);
+    text-align: center;
+    font-family: Work Sans, Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  button {
+    background: none;
+    border: none;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
+
+.date-picker__select {
+  display: flex;
+  gap: 12px;
+
+  * {
+    border-radius: 8px;
+    border: 1px solid var(--color-gray-300);
+    background: white;
+
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+
+  p {
+    padding: 8px 14px;
+    color: var(--var-gray-900);
+    font-family: Work Sans, Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    flex: 1 1 auto;
+  }
+
+  button {
+    padding: 10px 16px;
+  }
+}
+
+.date-picker__calendar {
+  display: flex;
+  flex-direction: column;
+
+  .date-picker__weekdays,
+  .date-picker__days_row {
+    display: flex;
+
+    p, div {
+      text-align: center;
+      width: calc(100% / 7);
+      border-radius: 20px;
+      background: none;
+      border: none;
+
+      color: var(--color-gray-700);
+      font-family: Work Sans, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+    }
+  }
+
+  p {
+    padding: 10px 8px;
+  }
+
+  .date-picker__days_row {
+    flex-wrap: wrap;
+
+    button {
+      padding: 10px 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      border: none;
+      background: none;
+    }
+
+    .today {
+      background: var(--color-blue);
+      color: white;
+    }
+
+    .date-picker__day--previous-month,
+    .date-picker__day--next-month {
+      button {
+        color: var(--color-gray-500);
+      }
+    }
+  }
+}

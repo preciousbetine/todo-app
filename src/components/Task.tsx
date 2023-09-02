@@ -12,9 +12,10 @@ interface TaskProps {
   startTime: string;
   endTime: string;
   completed: boolean,
+  show: () => void,
 }
 
-function Task({ id, title, date, startTime, endTime, completed }: TaskProps) {
+function Task({ id, title, date, startTime, endTime, completed, show }: TaskProps) {
   const [isCompleted, setIsCompleted] = useState<boolean>(completed);
   const [taskDetailsVisible, setTaskDetailsVisible] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -50,7 +51,10 @@ function Task({ id, title, date, startTime, endTime, completed }: TaskProps) {
           <button
             className={TaskStyles['task-details']}
             type="button"
-            onClick={() => setTaskDetailsVisible(true)}
+            onClick={() => {
+              show();
+              setTaskDetailsVisible(true);
+            }}
           >
             <h3 className={isCompleted && TaskStyles.completed || ''}>{title}</h3>
             <p className={isCompleted && TaskStyles.completed || ''}>

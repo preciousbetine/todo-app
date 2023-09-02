@@ -1,18 +1,38 @@
+$breakpoint: 1000px;
+$max-width: 1340px;
+
 .header {
-  padding: 40px 20px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 1px solid #ccc;
 
-  .heading {
-    font-size: 24px;
-    line-height: 24px;
-    font-weight: 700;
+  .container {
+    padding: 40px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .heading {
+      font-size: 24px;
+      line-height: 24px;
+      font-weight: 700;
+    }
+
+    .hamburger {
+      padding: 4px 8px;
+      cursor: pointer;
+    }
   }
 
-  .hamburger {
-    padding: 4px 8px;
-    cursor: pointer;
+  @media (min-width: $breakpoint) {
+    .container {
+      padding: 0px 32px;
+      max-width: $max-width;
+      margin: auto;
+      height: 72px;
+    }
+
+    .heading {
+      font-size: 32px;
+      line-height: 32px;
+    }
   }
 }
