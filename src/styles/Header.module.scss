@@ -3,6 +3,10 @@ $max-width: 1340px;
 
 .header {
   border-bottom: 1px solid #ccc;
+  position: sticky;
+  background: #fff;
+  top: 0;
+  z-index: 1000;
 
   .logo {
     display: flex;
@@ -29,7 +33,6 @@ $max-width: 1340px;
   }
 
   @media (min-width: $breakpoint) {
-    .logo > img,
     .hamburger {
       display: none;
     }

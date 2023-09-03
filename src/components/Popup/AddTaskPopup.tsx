@@ -86,6 +86,7 @@ export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps
         <button
           className={TaskStyles['task-popup_add']}
           onClick={saveTodo}
+          disabled={!title.trim().length}
         >
           Add
         </button>

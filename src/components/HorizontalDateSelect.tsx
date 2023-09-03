@@ -3,6 +3,7 @@ import ComponentStyles from '../styles/HorizontalDateSelect.module.scss';
 
 function HorizontalDateSelect() {
   const [currentMonth] = useState<number>(new Date().getMonth());
+  const [currentYear] = useState<number>(new Date().getFullYear());
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
                   'October', 'November', 'December'];
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -39,7 +40,7 @@ function HorizontalDateSelect() {
 
   return (
     <div className={ComponentStyles.dateSelect}>
-      <h2>{months[currentMonth]}</h2>
+      <h2>{months[currentMonth]}, {currentYear} </h2>
       <div className={ComponentStyles.days}>
         {daysJSX}
         <div className={ComponentStyles['hide-scroll']}></div>

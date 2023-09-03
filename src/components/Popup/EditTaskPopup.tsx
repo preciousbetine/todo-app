@@ -92,6 +92,7 @@ export default function EditTaskPopup({
         <button
           className={TaskStyles['task-popup_save']}
           onClick={saveTask}
+          disabled={!editTitle.trim().length}
         >
           Save
         </button>

@@ -91,6 +91,7 @@ export default function AddTask({ close }: { close: () => void }) {
         <button
           className={TaskStyles['task-popup_add']}
           onClick={saveTodo}
+          disabled={!title.trim().length}
         >
           Add
         </button>

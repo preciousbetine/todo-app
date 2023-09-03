@@ -176,8 +176,14 @@ $breakpoint: 1000px;
     border: none;
 
     transition: 0.4s background-color ease-in-out;
+
     &:hover {
       background-color: var(--color-blue-hover);
+    }
+
+    &:disabled {
+      background-color: var(--color-blue-disabled);
+      cursor: not-allowed;
     }
   }
 }

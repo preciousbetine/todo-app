@@ -21,6 +21,7 @@
   --color-blue: #3f5bf6;
   --color-blue-100: #eaedfe;
   --color-blue-hover: #0e31f2;
+  --color-blue-disabled: #cfd7ff;
   --color-blue-transparent: rgba(63, 91, 246, 0.25);
 
   user-select: none;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from './redux/store';
 import Header from './components/Header';
@@ -14,13 +14,18 @@ import EditTask from './components/EditTask';
 
 function TodoApp() {
   const [period, setPeriod] = useState<string>('morning');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [numPages, setNumPages] = useState<number>(1);
+  const [pageButtons, setPageButtons] = useState<JSX.Element[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const [taskPopupVisible, setTaskPopupVisible] = useState<boolean>(false);
   const todos = useSelector((s:  { todos: TodoState }) => s.todos).todos;
   const [panelContent, setPanelContent] = useState<string>('date-picker');
   const [currentTaskId, setCurrentTaskId] = useState<string>('');
 
-  const taskComponents = todos.map(task => {
+  const taskHeading = React.createRef<HTMLHeadingElement>();
+
+  const taskComponents = todos.slice((currentPage - 1) * 7, currentPage * 7).map(task => {
     return (
       <Task
         key={task.id}
@@ -32,6 +37,29 @@ function TodoApp() {
       />
     );
   });
+
+  useEffect(() => {
+    taskHeading.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [currentPage, taskHeading]);
+
+  useEffect(() => {
+    const buttons = [];
+    const noOfPages = Math.ceil(todos.length / 7);
+    setNumPages(noOfPages);
+
+    for (let i = 1; i <= noOfPages; i++) {
+      buttons.push(
+        <button
+          key={i}
+          className={TodoAppStyles['page-btn']}
+          onClick={() => setCurrentPage(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+    setPageButtons(buttons);
+  }, [todos]);
 
   useEffect(() => {
     const date = new Date();
@@ -66,9 +94,30 @@ function TodoApp() {
         <div className={TodoAppStyles.main}>
           <HorizontalDateSelect />
           <div className={TodoAppStyles['tasks-container']}>
-            <h2>My Tasks</h2>
+            <h2 ref={taskHeading}>My Tasks</h2>
             <div className={TodoAppStyles.tasks}>
               {taskComponents}
+            </div>
+            <div className={TodoAppStyles.pagination}>
+              <button
+                className={TodoAppStyles['prev-btn']}
+                onClick={() => { if (currentPage > 1) setCurrentPage(currentPage - 1) }}
+              >
+                <img src="arrow-left.svg" alt="" />
+                Previous
+              </button>
+              <div className={TodoAppStyles['page-num']}>
+                {pageButtons}
+              </div>
+              <button
+                className={TodoAppStyles['next-btn']}
+                onClick={() => {
+                  if (currentPage < numPages) setCurrentPage(currentPage + 1);
+                }}
+              >
+                Next
+                <img src="arrow-right.svg" alt="" />
+              </button>
             </div>
           </div>
         </div>

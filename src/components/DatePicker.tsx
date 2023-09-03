@@ -89,7 +89,7 @@ function DatePicker() {
     daysInMonth,
     year,
     day,
-    todos,
+    todos.length,
   ]);
 
   const dateComponents = days.map((day: {
