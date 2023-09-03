@@ -11,12 +11,11 @@ import { TodoState, getTodos } from './redux/slices/todo';
 import TodoAppStyles from './styles/TodoApp.module.scss';
 import TaskDetails from './components/TaskDetails';
 import EditTask from './components/EditTask';
+import Pagination from './components/Pagination';
 
 function TodoApp() {
   const [period, setPeriod] = useState<string>('morning');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [numPages, setNumPages] = useState<number>(1);
-  const [pageButtons, setPageButtons] = useState<JSX.Element[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const [taskPopupVisible, setTaskPopupVisible] = useState<boolean>(false);
   const todos = useSelector((s:  { todos: TodoState }) => s.todos).todos;
@@ -37,29 +36,6 @@ function TodoApp() {
       />
     );
   });
-
-  useEffect(() => {
-    taskHeading.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, [currentPage, taskHeading]);
-
-  useEffect(() => {
-    const buttons = [];
-    const noOfPages = Math.ceil(todos.length / 7);
-    setNumPages(noOfPages);
-
-    for (let i = 1; i <= noOfPages; i++) {
-      buttons.push(
-        <button
-          key={i}
-          className={TodoAppStyles['page-btn']}
-          onClick={() => setCurrentPage(i)}
-        >
-          {i}
-        </button>
-      );
-    }
-    setPageButtons(buttons);
-  }, [todos]);
 
   useEffect(() => {
     const date = new Date();
@@ -98,27 +74,13 @@ function TodoApp() {
             <div className={TodoAppStyles.tasks}>
               {taskComponents}
             </div>
-            <div className={TodoAppStyles.pagination}>
-              <button
-                className={TodoAppStyles['prev-btn']}
-                onClick={() => { if (currentPage > 1) setCurrentPage(currentPage - 1) }}
-              >
-                <img src="arrow-left.svg" alt="" />
-                Previous
-              </button>
-              <div className={TodoAppStyles['page-num']}>
-                {pageButtons}
-              </div>
-              <button
-                className={TodoAppStyles['next-btn']}
-                onClick={() => {
-                  if (currentPage < numPages) setCurrentPage(currentPage + 1);
-                }}
-              >
-                Next
-                <img src="arrow-right.svg" alt="" />
-              </button>
-            </div>
+            <Pagination
+              className={TodoAppStyles.pagination}
+              currentPage={currentPage}
+              totalCount={todos.length}
+              pageSize={7}
+              onPageChange={(page) => setCurrentPage(Number(page))}
+            />
           </div>
         </div>
         <div className={TodoAppStyles['side-panel']}>

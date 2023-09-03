@@ -1,0 +1,107 @@
+$breakpoint: 1000px;
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+
+  .pagination-numbers {
+    display: flex;
+  }
+
+  .pagination-item {
+    width: 40px;
+    height: 40px;
+    margin: auto 4px;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.01071em;
+    border-radius: 20px;
+    line-height: 1.43;
+    font-size: 13px;
+    min-width: 32px;
+
+    color: var(--color-gray-600);
+    font-family: Work Sans, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+
+    &.dots:hover {
+      background-color: transparent;
+      cursor: default;
+    }
+    &:hover {
+      background-color: var(--color-gray-50);
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: var(--color-gray-50)
+    }
+
+    .arrow {
+      &::before {
+        position: relative;
+        /* top: 3pt; Uncomment this to lower the icons as requested in comments*/
+        content: '';
+        /* By using an em scale, the arrows will size with the font */
+        display: inline-block;
+        width: 0.4em;
+        height: 0.4em;
+        border-right: 0.12em solid rgba(0, 0, 0, 0.87);
+        border-top: 0.12em solid rgba(0, 0, 0, 0.87);
+      }
+
+      &.left {
+        transform: rotate(-135deg) translate(-50%);
+      }
+
+      &.right {
+        transform: rotate(45deg);
+      }
+    }
+
+    &.disabled {
+      pointer-events: none;
+
+      .arrow::before {
+        border-right: 0.12em solid rgba(0, 0, 0, 0.43);
+        border-top: 0.12em solid rgba(0, 0, 0, 0.43);
+      }
+
+      &:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+  }
+
+  .pagination-control {
+    width: max-content;
+    gap: 10px;
+    align-items: center;
+    font-weight: 600;
+
+    &:hover {
+      background: none;
+      color: var(--color-gray-500);
+    }
+  }
+
+  @media (max-width: $breakpoint) {
+    .pagination-control span {
+      display: none;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .pagination-numbers {
+      display: none;
+    }
+  }
+}
