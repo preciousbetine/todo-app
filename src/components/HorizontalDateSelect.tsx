@@ -35,7 +35,7 @@ function HorizontalDateSelect() {
       block: 'end',
       inline: 'center'
     });
-  }, [daysJSX]);
+  }, []);
 
   return (
     <div className={ComponentStyles.dateSelect}>

@@ -4,7 +4,10 @@ function Header () {
   return (
     <header className={HeaderStyles.header}>
       <div className={HeaderStyles.container}>
-        <span className={HeaderStyles.heading}>ToDo</span>
+        <div className={HeaderStyles.logo}>
+          <img src="logo.svg" alt="" />
+          <span className={HeaderStyles.heading}>ToDo</span>
+        </div>
         <img className={HeaderStyles.hamburger} src="hamburger.svg" alt="" />
       </div>
     </header>

@@ -36,6 +36,11 @@ const todosSlice = createSlice({
     },
     addTodo: (state, action: { payload: Todo }) => {
       state.todos.push(action.payload);
+      state.todos.sort((a, b) => {
+        if (a.date > b.date) return 1;
+        if (a.date < b.date) return -1;
+        return 0;
+      });
       localStorage.setItem('todos', JSON.stringify(state.todos));
     },
     removeTodo: (state, action: { payload: string }) => {

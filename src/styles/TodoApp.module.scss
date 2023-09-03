@@ -79,6 +79,11 @@ $max-width: 1340px;
       font-weight: 600;
       line-height: 20px;
       cursor: pointer;
+
+      transition: 0.4s background-color ease-in-out;
+      &:hover {
+        background-color: var(--color-blue-hover);
+      }
     }
   }
 }

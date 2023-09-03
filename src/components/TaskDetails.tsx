@@ -41,11 +41,33 @@ export default function TaskDetails({
             <div className={TaskStyles['task-detail_item']}>
               <img src="clock-blue.svg" alt="start time" />
               <span>
-                {task.startTime}
+                {
+                  (() => {
+                    if (task.startTime.trim() === '') return ''
+                    const date = new Date("1970-01-01T" + task.startTime);
+                    let hours = date.getHours();
+                    const minutes = date.getMinutes();
+                    const amOrPm = hours >= 12 ? 'pm' : 'am';
+
+                    hours = hours % 12 || 12;
+                    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amOrPm}`;
+                  })()
+                }
                 {' '}
-                -
-                {' '}
-                {task.endTime}
+                {
+                  task.endTime === '00:00' ? '' : `${
+                    (() => {
+                      if (task.endTime.trim() === '') return ''
+                      const date = new Date("1970-01-01T" + task.endTime);
+                      let hours = date.getHours();
+                      const minutes = date.getMinutes();
+                      const amOrPm = hours >= 12 ? 'pm' : 'am';
+
+                      hours = hours % 12 || 12;
+                      return `- ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amOrPm}`;
+                    })()
+                  }`
+                }
               </span>
             </div>
           </div>

@@ -16,6 +16,9 @@ export default function EditTaskPopup({
   completed,
 }: TaskPopupProps) {
   const [editTitle, setEditTitle] = useState<string>(title || '');
+  const [editStartTime, setStartTime] = useState<string>(startTime || '00:00');
+  const [editEndTime, setEndTime] = useState<string>(endTime || '00:00');
+  const [editDate, setDate] = useState<string>(date || new Date().toISOString().slice(0, 10));
   const dispatch = useDispatch<AppDispatch>();
 
   const saveTask = () => {
@@ -30,9 +33,9 @@ export default function EditTaskPopup({
     dispatch(updateTodo({
       id,
       title: editTitle,
-      startTime: startTime || '',
-      endTime: endTime || '',
-      date: date || '',
+      startTime: editStartTime,
+      endTime: editEndTime,
+      date: editDate,
       completed: completed || false,
     }));
     setVisible(false);
@@ -56,25 +59,13 @@ export default function EditTaskPopup({
         />
         <div className={TaskStyles['task-time_settings']}>
           <button className={TaskStyles['task-time_settings_day']}>
-            <img
-              alt="date"
-              src="calendar.svg"
-            />
-            <span>Today</span>
+            <input type="date" value={editDate} onChange={(e) => setDate(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_start']}>
-            <img
-              alt="start time"
-              src="clock.svg"
-            />
-            <span>{startTime}</span>
+            <input type="time" value={editStartTime} onChange={(e) => setStartTime(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_end']}>
-            <img
-              alt="end time"
-              src="clock.svg"
-            />
-            <span>{endTime}</span>
+            <input type="time" value={editEndTime} onChange={(e) => setEndTime(e.target.value)} />
           </button>
         </div>
         <div className={TaskStyles['task-notification_settings']}>

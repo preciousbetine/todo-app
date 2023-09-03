@@ -12,15 +12,19 @@ export default function EditTask({
   task: Todo
 } ) {
   const [editTitle, setEditTitle] = useState<string>(task.title || '');
+  const [startTime, setStartTime] = useState<string>(task.startTime);
+  const [endTime, setEndTime] = useState<string>(task.endTime);
+  const [date, setDate] = useState<string>(task.date);
+
   const dispatch = useDispatch<AppDispatch>();
 
   const saveTask = () => {
     dispatch(updateTodo({
       id: task.id,
       title: editTitle,
-      startTime: task.startTime || '',
-      endTime: task.endTime || '',
-      date: task.date || '',
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
       completed: task.completed || false,
     }));
     close();
@@ -44,25 +48,13 @@ export default function EditTask({
         />
         <div className={TaskStyles['task-time_settings']}>
           <button className={TaskStyles['task-time_settings_day']}>
-            <img
-              alt="date"
-              src="calendar.svg"
-            />
-            <span>Today</span>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_start']}>
-            <img
-              alt="start time"
-              src="clock.svg"
-            />
-            <span>{task.startTime}</span>
+            <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_end']}>
-            <img
-              alt="end time"
-              src="clock.svg"
-            />
-            <span>{task.endTime}</span>
+            <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
           </button>
         </div>
         <div className={TaskStyles['task-notification_settings']}>
@@ -73,10 +65,12 @@ export default function EditTask({
             />
             <p>10 minutes before</p>
           </div>
-          <img
-            alt="close"
-            src="close.svg"
-          />
+          <button>
+            <img
+              alt="close"
+              src="close.svg"
+            />
+          </button>
         </div>
       </div>
       <div className={TaskStyles['task-popup_actions']}>

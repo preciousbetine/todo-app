@@ -57,11 +57,33 @@ export default function TaskDetailsPopup({
             <div className={TaskStyles['task-detail_item']}>
               <img src="clock-blue.svg" alt="start time" />
               <span>
-                {startTime}
+                {
+                  (() => {
+                    if (startTime?.trim() === '') return ''
+                    const date = new Date("1970-01-01T" + startTime);
+                    let hours = date.getHours();
+                    const minutes = date.getMinutes();
+                    const amOrPm = hours >= 12 ? 'pm' : 'am';
+
+                    hours = hours % 12 || 12;
+                    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amOrPm}`;
+                  })()
+                }
                 {' '}
-                -
-                {' '}
-                {endTime}
+                {
+                  endTime === '00:00' ? '' : `${
+                    (() => {
+                      if (endTime?.trim() === '') return ''
+                      const date = new Date("1970-01-01T" + endTime);
+                      let hours = date.getHours();
+                      const minutes = date.getMinutes();
+                      const amOrPm = hours >= 12 ? 'pm' : 'am';
+
+                      hours = hours % 12 || 12;
+                      return `- ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amOrPm}`;
+                    })()
+                  }`
+                }
               </span>
             </div>
           </div>

@@ -7,9 +7,9 @@ import TaskStyles from '../styles/TaskPopup.module.scss';
 
 export default function AddTask({ close }: { close: () => void }) {
   const [title, setTitle] = useState<string>('');
-  const [startTime, setStartTime] = useState<string>('02:00');
-  const [endTime, setEndTime] = useState<string>('04:00');
-  const [date, setDate] = useState<string>('Today');
+  const [startTime, setStartTime] = useState<string>('00:00');
+  const [endTime, setEndTime] = useState<string>('00:00');
+  const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -28,9 +28,9 @@ export default function AddTask({ close }: { close: () => void }) {
     dispatch(addTodo(todo));
 
     setTitle('');
-    setStartTime(startTime);
-    setEndTime(endTime);
-    setDate(date);
+    setStartTime('');
+    setEndTime('');
+    setDate('');
 
     close();
   };
@@ -56,25 +56,13 @@ export default function AddTask({ close }: { close: () => void }) {
         />
         <div className={TaskStyles['task-time_settings']}>
           <button className={TaskStyles['task-time_settings_day']}>
-            <img
-              alt="date"
-              src="calendar.svg"
-            />
-            <span>Today</span>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_start']}>
-            <img
-              alt="start time"
-              src="clock.svg"
-            />
-            <span>00:00</span>
+            <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_end']}>
-            <img
-              alt="end time"
-              src="clock.svg"
-            />
-            <span>00:00</span>
+            <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
           </button>
         </div>
         <div className={TaskStyles['task-notification_settings']}>
@@ -85,10 +73,12 @@ export default function AddTask({ close }: { close: () => void }) {
             />
             <p>10 minutes before</p>
           </div>
-          <img
-            alt="close"
-            src="close.svg"
-          />
+          <button>
+            <img
+              alt="close"
+              src="close.svg"
+            />
+          </button>
         </div>
       </div>
       <div className={TaskStyles['task-popup_actions']}>
