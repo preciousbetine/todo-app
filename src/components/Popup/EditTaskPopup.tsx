@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { AppDispatch } from '../../redux/store';
 import { updateTodo } from '../../redux/slices/todo';
 import TaskStyles from '../../styles/TaskPopup.module.scss';
@@ -38,6 +39,12 @@ export default function EditTaskPopup({
       date: editDate,
       completed: completed || false,
     }));
+    toast('Task updated successfully!', {
+      type: 'success',
+      icon: '☑️',
+      position: 'bottom-left',
+      progressClassName: TaskStyles['task-toast_progress'],
+    });
     setVisible(false);
   };
 

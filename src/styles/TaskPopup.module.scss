@@ -205,6 +205,10 @@ $breakpoint: 1000px;
   }
 }
 
+.task-toast_progress {
+  background-color: #3f5bf6 !important;
+}
+
 @keyframes slide-up {
   0% {
     transform: translateY(100%);

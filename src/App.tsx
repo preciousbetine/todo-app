@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Header';
 import DatePicker from './components/DatePicker';
 import HorizontalDateSelect from './components/HorizontalDateSelect';
@@ -51,6 +53,7 @@ function TodoApp() {
   return (
     <>
       <Header />
+      <ToastContainer />
       <div className={TodoAppStyles.welcome}>
         <div>
           <h1>Good {period}!</h1>

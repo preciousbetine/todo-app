@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { AppDispatch } from '../redux/store';
 import { Todo, removeTodo } from '../redux/slices/todo';
 import { addOrdinalSuffix } from '../utils/date';
@@ -17,6 +18,12 @@ export default function TaskDetails({
 
   const deleteTodo = () => {
     dispatch(removeTodo(task.id));
+    toast('Task deleted successfully!', {
+      type: 'success',
+      icon: '☑️',
+      position: 'bottom-left',
+      progressClassName: TaskStyles['task-toast_progress'],
+    });
     close();
   };
 

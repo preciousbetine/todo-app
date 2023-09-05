@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { v5 as uuidv5 } from 'uuid';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { AppDispatch } from '../redux/store';
 import { addTodo } from '../redux/slices/todo';
 import TaskStyles from '../styles/TaskPopup.module.scss';
@@ -27,6 +28,12 @@ export default function AddTask({ close }: { close: () => void }) {
     };
 
     dispatch(addTodo(todo));
+    toast('Task added successfully!', {
+      type: 'success',
+      icon: '☑️',
+      position: 'bottom-left',
+      progressClassName: TaskStyles['task-toast_progress'],
+    });
 
     setTitle('');
     setStartTime('00:00');

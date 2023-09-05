@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import EditTaskPopup from './EditTaskPopup';
+import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { removeTodo } from '../../redux/slices/todo';
+import EditTaskPopup from './EditTaskPopup';
 import TaskPopupWrapper, { TaskPopupProps } from './TaskPopupWrapper';
 import { addOrdinalSuffix } from '../../utils/date';
 import TaskStyles from '../../styles/TaskPopup.module.scss';
@@ -28,6 +29,12 @@ export default function TaskDetailsPopup({
   const deleteTodo = () => {
     setVisible(false);
     dispatch(removeTodo(id));
+    toast('Task deleted successfully!', {
+      type: 'success',
+      icon: '☑️',
+      position: 'bottom-left',
+      progressClassName: TaskStyles['task-toast_progress'],
+    });
   };
 
   if (!id) {
