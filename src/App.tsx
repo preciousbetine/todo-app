@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from './redux/store';
+import { useSelector } from 'react-redux';
 import Header from './components/Header';
 import DatePicker from './components/DatePicker';
 import HorizontalDateSelect from './components/HorizontalDateSelect';
 import Task from './components/Task';
 import AddTask from './components/AddTask';
 import AddTaskPopup from './components/Popup/AddTaskPopup';
-import { TodoState, getTodos } from './redux/slices/todo';
+import { TodoState } from './redux/slices/todo';
 import TodoAppStyles from './styles/TodoApp.module.scss';
 import TaskDetails from './components/TaskDetails';
 import EditTask from './components/EditTask';
@@ -16,13 +15,14 @@ import Pagination from './components/Pagination';
 function TodoApp() {
   const [period, setPeriod] = useState<string>('morning');
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const dispatch = useDispatch<AppDispatch>();
   const [taskPopupVisible, setTaskPopupVisible] = useState<boolean>(false);
   const todos = useSelector((s:  { todos: TodoState }) => s.todos).todos;
   const [panelContent, setPanelContent] = useState<string>('date-picker');
   const [currentTaskId, setCurrentTaskId] = useState<string>('');
 
   const taskHeading = React.createRef<HTMLHeadingElement>();
+
+  console.log(todos);
 
   const taskComponents = todos.slice((currentPage - 1) * 7, currentPage * 7).map(task => {
     return (
@@ -46,9 +46,7 @@ function TodoApp() {
     } else if (hour >= 18) {
       setPeriod('evening');
     }
-
-    dispatch(getTodos());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>
