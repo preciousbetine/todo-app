@@ -74,7 +74,7 @@ npm run dev
 
 ### Live Demo
 
-The project is live [here](https://schoolinka-todo-app-preciousbetine.vercel.com/).
+The project is live [here](https://schoolinka-todo-app-preciousbetine.vercel.app/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
