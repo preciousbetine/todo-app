@@ -8,9 +8,10 @@ import TaskStyles from '../../styles/TaskPopup.module.scss';
 
 export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps) {
   const [title, setTitle] = useState<string>('');
-  const [startTime, setStartTime] = useState<string>('');
-  const [endTime, setEndTime] = useState<string>('');
+  const [startTime, setStartTime] = useState<string>('00:00');
+  const [endTime, setEndTime] = useState<string>('00:00');
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
+  const [notif, setNotif] = useState<boolean>(true);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -29,9 +30,9 @@ export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps
     dispatch(addTodo(todo));
 
     setTitle('');
-    setStartTime('');
-    setEndTime('');
-    setDate('');
+    setStartTime('00:00');
+    setEndTime('00:00');
+    setDate(new Date().toISOString().slice(0, 10));
     setVisible(false);
   };
 
@@ -62,7 +63,10 @@ export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps
             <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
           </button>
         </div>
-        <div className={TaskStyles['task-notification_settings']}>
+        <div
+          className={TaskStyles['task-notification_settings']}
+          style={{ display: notif ? 'flex' : 'none' }}
+        >
           <div className={TaskStyles['task-notification_time']}>
             <img
               alt="notification"
@@ -70,10 +74,12 @@ export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps
             />
             <p>10 minutes before</p>
           </div>
-          <img
-            alt="close"
-            src="close.svg"
-          />
+          <button onClick={() => setNotif(false)}>
+            <img
+              alt="close"
+              src="close.svg"
+            />
+          </button>
         </div>
       </div>
       <div className={TaskStyles['task-popup_actions']}>

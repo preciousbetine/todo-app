@@ -7,6 +7,7 @@ import TaskStyles from '../styles/TaskPopup.module.scss';
 
 export default function AddTask({ close }: { close: () => void }) {
   const [title, setTitle] = useState<string>('');
+  const [notif, setNotif] = useState<boolean>(true);
   const [startTime, setStartTime] = useState<string>('00:00');
   const [endTime, setEndTime] = useState<string>('00:00');
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
@@ -28,9 +29,9 @@ export default function AddTask({ close }: { close: () => void }) {
     dispatch(addTodo(todo));
 
     setTitle('');
-    setStartTime('');
-    setEndTime('');
-    setDate('');
+    setStartTime('00:00');
+    setEndTime('00:00');
+    setDate(new Date().toISOString().slice(0, 10));
 
     close();
   };
@@ -65,7 +66,10 @@ export default function AddTask({ close }: { close: () => void }) {
             <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
           </button>
         </div>
-        <div className={TaskStyles['task-notification_settings']}>
+        <div
+          className={TaskStyles['task-notification_settings']}
+          style={{ display: notif ? 'flex' : 'none' }}
+        >
           <div className={TaskStyles['task-notification_time']}>
             <img
               alt="notification"
@@ -73,7 +77,7 @@ export default function AddTask({ close }: { close: () => void }) {
             />
             <p>10 minutes before</p>
           </div>
-          <button>
+          <button onClick={() => setNotif(false)}>
             <img
               alt="close"
               src="close.svg"
