@@ -26,14 +26,52 @@ $max-width: 1340px;
       font-weight: 700;
     }
 
-    .hamburger {
-      padding: 4px 8px;
-      cursor: pointer;
+    .menu-btn {
+      background: none;
+      border: none;
+
+      .hamburger {
+        padding: 4px 8px;
+        cursor: pointer;
+      }
     }
   }
 
+  nav {
+    display: none;
+  }
+
   @media (min-width: $breakpoint) {
-    .hamburger {
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .tools {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        img {
+          border-radius: 20px;
+          padding: 10px;
+          cursor: pointer;
+          transition: 0.3s all ease-in-out;
+
+          &:hover {
+            background: #f5f5f5;
+          }
+        }
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+      }
+    }
+
+    .menu-btn {
       display: none;
     }
 
