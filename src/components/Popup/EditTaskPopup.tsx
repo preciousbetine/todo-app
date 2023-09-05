@@ -1,15 +1,55 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { AppDispatch } from '../../redux/store';
+import { updateTodo } from '../../redux/slices/todo';
 import TaskStyles from '../../styles/TaskPopup.module.scss';
 import TaskPopupWrapper, { TaskPopupProps } from './TaskPopupWrapper';
 
 export default function EditTaskPopup({
+  id,
   visible,
   setVisible,
   title,
   startTime,
   endTime,
+  date,
+  completed,
 }: TaskPopupProps) {
+  const [editTitle, setEditTitle] = useState<string>(title || '');
+  const [editStartTime, setStartTime] = useState<string>(startTime || '00:00');
+  const [editEndTime, setEndTime] = useState<string>(endTime || '00:00');
+  const [editDate, setDate] = useState<string>(date || new Date().toISOString().slice(0, 10));
+  const dispatch = useDispatch<AppDispatch>();
+
+  const saveTask = () => {
+    console.log(
+      id,
+      title,
+      startTime,
+      endTime,
+      date,
+      completed,
+    )
+    dispatch(updateTodo({
+      id,
+      title: editTitle,
+      startTime: editStartTime,
+      endTime: editEndTime,
+      date: editDate,
+      completed: completed || false,
+    }));
+    toast('Task updated successfully!', {
+      type: 'success',
+      icon: '☑️',
+      position: 'bottom-left',
+      progressClassName: TaskStyles['task-toast_progress'],
+    });
+    setVisible(false);
+  };
+
   return (
-    <TaskPopupWrapper visible={visible} setVisible={setVisible} fullScreen>
+    <TaskPopupWrapper id={id} visible={visible} setVisible={setVisible} fullScreen>
       <div className={TaskStyles['task-popup_content']}>
         <div className={TaskStyles['task-popup_header']}>
           <h3>Edit Task</h3>
@@ -19,28 +59,20 @@ export default function EditTaskPopup({
             <img alt="close" src="close.svg" />
           </button>
         </div>
-        <textarea className={TaskStyles['task-popup_description']} defaultValue={title}/>
+        <textarea
+          className={TaskStyles['task-popup_description']}
+          value={editTitle}
+          onChange={(e) => setEditTitle(e.target.value)}
+        />
         <div className={TaskStyles['task-time_settings']}>
           <button className={TaskStyles['task-time_settings_day']}>
-            <img
-              alt="date"
-              src="calendar.svg"
-            />
-            <span>Today</span>
+            <input type="date" value={editDate} onChange={(e) => setDate(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_start']}>
-            <img
-              alt="start time"
-              src="clock.svg"
-            />
-            <span>{startTime}</span>
+            <input type="time" value={editStartTime} onChange={(e) => setStartTime(e.target.value)} />
           </button>
           <button className={TaskStyles['task-time_settings_end']}>
-            <img
-              alt="end time"
-              src="clock.svg"
-            />
-            <span>{endTime}</span>
+            <input type="time" value={editEndTime} onChange={(e) => setEndTime(e.target.value)} />
           </button>
         </div>
         <div className={TaskStyles['task-notification_settings']}>
@@ -64,7 +96,13 @@ export default function EditTaskPopup({
         >
           Cancel
         </button>
-        <button className={TaskStyles['task-popup_save']}>Save</button>
+        <button
+          className={TaskStyles['task-popup_save']}
+          onClick={saveTask}
+          disabled={!editTitle.trim().length}
+        >
+          Save
+        </button>
       </div>
     </TaskPopupWrapper>
   )

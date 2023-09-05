@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ComponentStyles from '../styles/HorizontalDateSelect.module.scss';
 
 function HorizontalDateSelect() {
   const [currentMonth] = useState<number>(new Date().getMonth());
+  const [currentYear] = useState<number>(new Date().getFullYear());
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
                   'October', 'November', 'December'];
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -18,15 +19,28 @@ function HorizontalDateSelect() {
   }
 
   const daysJSX = daysArray.map((day) => (
-    <button type="button" key={day.day} className={ComponentStyles.day}>
+    <button
+      type="button"
+      key={day.day}
+      className={ComponentStyles.day + (day.day === (new Date).getDate() ? ' ' + ComponentStyles.today : '') }
+    >
       <span>{day.dayOfWeek}</span>
       <span>{day.day}</span>
     </button>
   ));
 
+  useEffect(() => {
+    const currentDayButton = document.querySelector(`.${ComponentStyles.today}`);
+    currentDayButton?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'center'
+    });
+  }, []);
+
   return (
     <div className={ComponentStyles.dateSelect}>
-      <h2>{months[currentMonth]}</h2>
+      <h2>{months[currentMonth]}, {currentYear} </h2>
       <div className={ComponentStyles.days}>
         {daysJSX}
         <div className={ComponentStyles['hide-scroll']}></div>

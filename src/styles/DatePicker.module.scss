@@ -1,0 +1,182 @@
+.date-picker {
+  width: 394px;
+  height: 444px;
+  padding: 20px 24px;
+  box-shadow: 0px 8px 8px -4px rgba(16, 24, 40, 0.03), 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.date-picker__header {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h3 {
+    color: var(--color-gray-700);
+    text-align: center;
+    font-family: Work Sans, Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  }
+
+  button {
+    background: none;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s all;
+
+    &:hover {
+      background-color: var(--color-gray-100);
+    }
+  }
+}
+
+.date-picker__select {
+  display: flex;
+  gap: 12px;
+
+  * {
+    border-radius: 8px;
+    border: 1px solid var(--color-gray-300);
+    background: white;
+
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+
+  p {
+    padding: 8px 14px;
+    color: var(--var-gray-900);
+    font-family: Work Sans, Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    flex: 1 1 auto;
+  }
+
+  button {
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+}
+
+.date-picker__calendar {
+  display: flex;
+  flex-direction: column;
+
+  .date-picker__weekdays,
+  .date-picker__days_row {
+    display: flex;
+
+    p, div {
+      text-align: center;
+      width: calc(100% / 7);
+      border-radius: 20px;
+      background: none;
+      border: none;
+
+      color: var(--color-gray-700);
+      font-family: Work Sans, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      transition:  0.3s all;
+    }
+  }
+
+  p {
+    padding: 10px 8px;
+  }
+
+  div {
+    display: flex;
+    justify-content: center;
+  }
+
+  .date-picker__days_row {
+    flex-wrap: wrap;
+
+    button {
+      padding: 10px 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      border: none;
+      background: none;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--color-gray-100);
+        color: black;
+      }
+
+      img {
+        display: none;
+      }
+    }
+
+    .today {
+      background: var(--color-blue);
+      color: white;
+    }
+
+    .date-picker__day--previous-month,
+    .date-picker__day--next-month {
+      button {
+        color: var(--color-gray-500);
+      }
+    }
+
+    .has-todo {
+      position: relative;
+      img {
+        display: block;
+        position: absolute;
+        bottom: 5px;
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.date-picker__animate {
+  animation: 0.4s ease-in-out 0s 1 normal none running fadeInUp;
+}

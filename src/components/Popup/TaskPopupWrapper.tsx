@@ -5,11 +5,12 @@ export interface TaskPopupProps {
   setVisible: (visible: boolean) => void;
   fullScreen?: boolean;
   children?: React.ReactNode;
-  id?: number;
+  id: string;
   title?: string;
   date?: string;
   startTime?: string;
   endTime?: string;
+  completed?: boolean;
 }
 
 export default function TaskPopupWrapper({ visible, children, fullScreen }: TaskPopupProps) {

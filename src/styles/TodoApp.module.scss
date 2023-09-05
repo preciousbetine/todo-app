@@ -1,13 +1,47 @@
+$breakpoint: 1000px;
+$max-width: 1340px;
+
 .application {
   padding: 32px 0 48px;
+  display: flex;
 
-  & > * {
-    margin-bottom: 32px;
+  .main {
+    width: 100%;
+
+    & > * {
+      margin-bottom: 32px;
+    }
+  }
+
+  .side-panel {
+    display: none;
+  }
+
+  @media (min-width: $breakpoint) {
+    padding: 48px 32px 96px 32px;
+    gap: 24px;
+    max-width: $max-width;
+    margin: auto;
+
+    .main {
+      width: calc(100% - 442px);
+      flex: 1 1 auto;
+    }
+
+    .side-panel {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1 0 418px;
+      border-left: 1px solid var(--color-gray-200);
+    }
   }
 }
 
 .welcome {
-  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 16px 0;
 
   h1 {
     font-size: 24px;
@@ -21,6 +55,43 @@
     font-size: 16px;
     line-height: 24px;
   }
+
+  button {
+    display: none;
+  }
+
+  @media (min-width: $breakpoint) {
+    max-width: $max-width;
+    margin: auto;
+    padding: 48px 32px 0;
+
+    h1 {
+      font-size: 30px;
+      line-height: 36px;
+    }
+
+    button {
+      display: flex;
+      border: none;
+      background-color: var(--color-blue);
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+      padding: 10px 16px;
+
+      font-family: Work Sans, sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 20px;
+      cursor: pointer;
+
+      transition: 0.4s background-color ease-in-out;
+      &:hover {
+        background-color: var(--color-blue-hover);
+      }
+    }
+  }
 }
 
 .tasks-container {
@@ -31,6 +102,10 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
+  }
+
+  @media (min-width: $breakpoint) {
+    padding: 0;
   }
 }
 
@@ -49,11 +124,21 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  position: sticky;
+  position: fixed;
   bottom: 24px;
   cursor: pointer;
 
   .svg {
     padding: 5px;
   }
+
+  @media (min-width: $breakpoint) {
+    display: none;
+  }
+}
+
+.pagination {
+  padding: 20px 0 0 0;
+  margin-top: 32px;
+  border-top: 1px solid var(--color-gray-200);
 }

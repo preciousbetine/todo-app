@@ -1,3 +1,5 @@
+$breakpoint: 1000px;
+
 .dateSelect {
   h2 {
     padding: 0 15px;
@@ -36,6 +38,31 @@
 
     & + :last-child {
       margin-right: 12.74px;
+    }
+  }
+
+  .today {
+    background-color: var(--color-blue);
+    color: white;
+  }
+
+  @media (min-width: $breakpoint) {
+    h2 {
+      padding: 0;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .days {
+      padding: 0;
+    }
+
+    .day {
+      margin-right: 12.74px;
+      margin-left: 0;
+      height: 68px;
+      flex: 1 0 62px;
+      font-size: 14px;
     }
   }
 }

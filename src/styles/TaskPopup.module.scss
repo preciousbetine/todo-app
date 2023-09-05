@@ -1,3 +1,5 @@
+$breakpoint: 1000px;
+
 .task-popup_container {
   position: fixed;
   left: 0;
@@ -6,6 +8,20 @@
   height: 100vh;
   background-color: rgb(0, 0, 0, 0.5);
   z-index: 1000;
+
+  @media (min-width: $breakpoint) {
+    display: none !important;
+  }
+}
+
+.task-card {
+  width: 394px;
+  height: max-content;
+  border-radius: 8px;
+  border: 1px solid var(--gray-100, #F2F4F7);
+  background: white;
+  padding: 24px 24px 0;
+  box-shadow: 0px 8px 8px -4px rgba(16, 24, 40, 0.03), 0px 20px 24px -4px rgba(16, 24, 40, 0.08);
 }
 
 .task-popup {
@@ -48,6 +64,7 @@
   button {
     background: none;
     border: none;
+    cursor: pointer;
   }
 }
 
@@ -59,19 +76,21 @@
   width: 100%;
   height: 140px;
   box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
+  outline: none;
+  font-family: Work Sans, sans-serif;
+  resize: none;
 }
 
 .task-time_settings {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 16px;
 
   button {
-    width: 100%;
+    width: calc((100% - 32px) / 3);
     height: 40px;
     border-radius: 8px;
-    padding: 10px 16px;
+    padding: 10px 6px;
     background-color: white;
     border: 1px solid var(--color-gray-300);
     font-family: Work Sans, Inter, sans-serif;
@@ -80,9 +99,29 @@
     line-height: 20px;
     display: flex;
     align-items: center;
-    gap: 8px;
     justify-content: center;
     color: var(--color-gray-500);
+    cursor: pointer;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    display: flex;
+    font-size: 14px;
+    max-width: 115px;
+
+    font-family: Work Sans, Inter, sans-serif;
+
+    flex-direction: row-reverse;
+    gap: 5px;
+  }
+
+  .task-time_settings_start,
+  .task-time_settings_end {
+    input {
+      transform: translateX(-8px);
+    }
   }
 }
 
@@ -91,6 +130,13 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  button {
+    background: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 }
 
 .task-notification_time {
@@ -112,6 +158,7 @@
     font-weight: 600;
     line-height: 19.36px;
     border-radius: 8px;
+    cursor: pointer;
   }
 
   .task-popup_cancel,
@@ -127,6 +174,17 @@
     background-color: var(--color-blue);
     color: white;
     border: none;
+
+    transition: 0.4s background-color ease-in-out;
+
+    &:hover {
+      background-color: var(--color-blue-hover);
+    }
+
+    &:disabled {
+      background-color: var(--color-blue-disabled);
+      cursor: not-allowed;
+    }
   }
 }
 
@@ -145,6 +203,10 @@
     line-height: 19.2px;
     margin-bottom: 8px;
   }
+}
+
+.task-toast_progress {
+  background-color: #3f5bf6 !important;
 }
 
 @keyframes slide-up {

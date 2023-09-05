@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { v5 as uuidv5 } from 'uuid';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store';
-import { addTodo } from '../../redux/slices/todo';
-import TaskPopupWrapper, { TaskPopupProps } from './TaskPopupWrapper';
-import TaskStyles from '../../styles/TaskPopup.module.scss';
+import { toast } from 'react-toastify';
+import { AppDispatch } from '../redux/store';
+import { addTodo } from '../redux/slices/todo';
+import TaskStyles from '../styles/TaskPopup.module.scss';
 
-export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps) {
+export default function AddTask({ close }: { close: () => void }) {
   const [title, setTitle] = useState<string>('');
+  const [notif, setNotif] = useState<boolean>(true);
   const [startTime, setStartTime] = useState<string>('00:00');
   const [endTime, setEndTime] = useState<string>('00:00');
   const [date, setDate] = useState<string>(new Date().toISOString().slice(0, 10));
-  const [notif, setNotif] = useState<boolean>(true);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -40,17 +39,21 @@ export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps
     setStartTime('00:00');
     setEndTime('00:00');
     setDate(new Date().toISOString().slice(0, 10));
-    setVisible(false);
+
+    close();
   };
 
   return (
-    <TaskPopupWrapper id={id} visible={visible} setVisible={setVisible}>
+    <div className={TaskStyles['task-card']}>
       <div className={TaskStyles['task-popup_content']}>
         <div className={TaskStyles['task-popup_header']}>
           <h3>Add Task</h3>
           <button
             type="button"
-            onClick={() => setVisible(false)}>
+            onClick={() => {
+              close();
+            }}
+          >
             <img alt="close" src="close.svg" />
           </button>
         </div>
@@ -92,7 +95,7 @@ export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps
       <div className={TaskStyles['task-popup_actions']}>
         <button
           className={TaskStyles['task-popup_cancel']}
-          onClick={() => setVisible(false)}
+          onClick={close}
         >
           Cancel
         </button>
@@ -104,6 +107,6 @@ export default function AddTaskPopup({ id, visible, setVisible }: TaskPopupProps
           Add
         </button>
       </div>
-    </TaskPopupWrapper>
+    </div>
   )
 }

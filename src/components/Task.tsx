@@ -1,20 +1,28 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
 import TaskDetailsPopup from './Popup/TaskDetailsPopup';
 import TaskStyles from '../styles/Task.module.scss';
+import { updateTodoCompletedStatus } from '../redux/slices/todo';
 
 interface TaskProps {
-  id: number;
+  id: string;
   title: string;
   date: string;
   startTime: string;
   endTime: string;
+  completed: boolean,
+  show: () => void,
 }
 
-function Task({ id, title, date, startTime, endTime }: TaskProps) {
-  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+function Task({ id, title, date, startTime, endTime, completed, show }: TaskProps) {
+  const [isCompleted, setIsCompleted] = useState<boolean>(completed);
   const [taskDetailsVisible, setTaskDetailsVisible] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
+
   const toggleTaskCompleted = () => {
     setIsCompleted(!isCompleted);
+    dispatch(updateTodoCompletedStatus({ id, completed: !isCompleted }));
   };
 
   return (
@@ -43,19 +51,48 @@ function Task({ id, title, date, startTime, endTime }: TaskProps) {
           <button
             className={TaskStyles['task-details']}
             type="button"
-            onClick={() => setTaskDetailsVisible(true)}
+            onClick={() => {
+              show();
+              setTaskDetailsVisible(true);
+            }}
           >
             <h3 className={isCompleted && TaskStyles.completed || ''}>{title}</h3>
             <p className={isCompleted && TaskStyles.completed || ''}>
-              {startTime}
+              {
+                (() => {
+                  if (startTime.trim() === '') return ''
+                  const date = new Date("1970-01-01T" + startTime);
+                  let hours = date.getHours();
+                  const minutes = date.getMinutes();
+                  const amOrPm = hours >= 12 ? 'pm' : 'am';
+
+                  hours = hours % 12 || 12;
+                  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amOrPm}`;
+                })()
+              }
               {' '}
-              -
-              {' '}
-              {endTime}
+              {
+                endTime === '00:00' ? '' : `${
+                  (() => {
+                    if (endTime.trim() === '') return ''
+                    const date = new Date("1970-01-01T" + endTime);
+                    let hours = date.getHours();
+                    const minutes = date.getMinutes();
+                    const amOrPm = hours >= 12 ? 'pm' : 'am';
+
+                    hours = hours % 12 || 12;
+                    return `- ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${amOrPm}`;
+                  })()
+                }`
+              }
             </p>
           </button>
         </div>
-        <span className={TaskStyles.day}>{date}</span>
+        <span className={TaskStyles.day}>
+          {
+            date === new Date().toISOString().slice(0, 10) ? 'Today' : date
+          }
+        </span>
       </div>
     </>
   )
