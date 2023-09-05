@@ -24,8 +24,6 @@ function TodoApp() {
 
   const taskHeading = React.createRef<HTMLHeadingElement>();
 
-  console.log(todos);
-
   const taskComponents = todos.slice((currentPage - 1) * 7, currentPage * 7).map(task => {
     return (
       <Task
