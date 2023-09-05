@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
 import { Todo, removeTodo } from '../redux/slices/todo';
+import { addOrdinalSuffix } from '../utils/date';
 import TaskStyles from '../styles/TaskPopup.module.scss';
 
 export default function TaskDetails({
@@ -19,6 +20,11 @@ export default function TaskDetails({
     close();
   };
 
+  if (!task) {
+    setTimeout(() => close(), 1000);
+    return <></>;
+  }
+
   return (
     <div className={TaskStyles['task-card']}>
       <div className={TaskStyles['task-popup_content']}>
@@ -36,7 +42,11 @@ export default function TaskDetails({
           <div>
             <div className={TaskStyles['task-detail_item']}>
               <img src="calendar-blue.svg" alt="date" />
-              <span>{task.date}</span>
+              <span>
+                {
+                  addOrdinalSuffix(new Date(task.date))
+                }
+              </span>
             </div>
             <div className={TaskStyles['task-detail_item']}>
               <img src="clock-blue.svg" alt="start time" />

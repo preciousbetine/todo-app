@@ -4,7 +4,12 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../redux/store';
 import { removeTodo } from '../../redux/slices/todo';
 import TaskPopupWrapper, { TaskPopupProps } from './TaskPopupWrapper';
+import { addOrdinalSuffix } from '../../utils/date';
 import TaskStyles from '../../styles/TaskPopup.module.scss';
+
+interface TaskDetailsPopupProps extends TaskPopupProps {
+  date: string;
+}
 
 export default function TaskDetailsPopup({
   id,
@@ -15,7 +20,7 @@ export default function TaskDetailsPopup({
   startTime,
   endTime,
   completed,
-}: TaskPopupProps) {
+}: TaskDetailsPopupProps) {
   const [editing, setEditing] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -24,6 +29,10 @@ export default function TaskDetailsPopup({
     setVisible(false);
     dispatch(removeTodo(id));
   };
+
+  if (!id) {
+    setVisible(false);
+  }
 
   return (
     <TaskPopupWrapper id={id} visible={visible} setVisible={setVisible} fullScreen>
@@ -52,7 +61,11 @@ export default function TaskDetailsPopup({
           <div>
             <div className={TaskStyles['task-detail_item']}>
               <img src="calendar-blue.svg" alt="date" />
-              <span>{date}</span>
+              <span>
+                {
+                  addOrdinalSuffix(new Date(date))
+                }
+              </span>
             </div>
             <div className={TaskStyles['task-detail_item']}>
               <img src="clock-blue.svg" alt="start time" />
