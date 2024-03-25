@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-# Schoolinka | Todo App
+# Todo App
 
 ## 📗 Table of Contents
 
@@ -25,7 +25,7 @@
 
 ## Todo app <a name="about-project"></a>
 
-A simple todo application built for schoolinka.
+A simple todo application.
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -74,7 +74,7 @@ npm run dev
 
 ### Live Demo
 
-The project is live [here](https://schoolinka-todo-app-preciousbetine.vercel.app/).
+The project is live [here](https://todo-app-preciousbetine.vercel.app/).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
